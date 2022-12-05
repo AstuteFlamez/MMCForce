@@ -1,5 +1,6 @@
 package mandomc.mmcforce.listeners;
 
+import mandomc.mmcforce.configs.ForceSideConfig;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,9 +18,11 @@ public class InventoryClick implements Listener {
         if(event.getView().getTitle().equalsIgnoreCase(ChatColor.DARK_GREEN + "" + ChatColor.BOLD + "Select Your Side!")){
             switch (event.getCurrentItem().getType()){
                 case RED_GLAZED_TERRACOTTA:
+                    ForceSideConfig.get().addDefault(player.getUniqueId().toString(), "dark");
                     event.setCancelled(true);
                     break;
                 case BLUE_GLAZED_TERRACOTTA:
+                    ForceSideConfig.get().addDefault(player.getUniqueId().toString(), "light");
                     event.setCancelled(true);
                     break;
             }
