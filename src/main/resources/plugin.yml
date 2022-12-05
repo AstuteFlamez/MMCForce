@@ -1,0 +1,7 @@
+name: MMCForce
+version: '${project.version}'
+main: mandomc.mmcforce.MMCForce
+api-version: 1.19
+load: STARTUP
+authors: [ AstuteFlamez ]
+description: force powers whoo
