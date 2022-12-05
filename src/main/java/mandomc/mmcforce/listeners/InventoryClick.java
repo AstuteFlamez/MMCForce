@@ -17,8 +17,10 @@ public class InventoryClick implements Listener {
         if(event.getView().getTitle().equalsIgnoreCase(ChatColor.DARK_GREEN + "" + ChatColor.BOLD + "Select Your Side!")){
             switch (event.getCurrentItem().getType()){
                 case RED_GLAZED_TERRACOTTA:
+                    event.setCancelled(true);
                     break;
                 case BLUE_GLAZED_TERRACOTTA:
+                    event.setCancelled(true);
                     break;
             }
         }
