@@ -32,7 +32,7 @@ public final class MMCForce extends JavaPlugin {
 
     @Override
     public void onDisable() {
-
+        ForceSideConfig.save();
     }
 
 }

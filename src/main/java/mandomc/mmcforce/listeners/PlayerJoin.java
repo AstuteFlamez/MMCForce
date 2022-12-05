@@ -1,5 +1,6 @@
 package mandomc.mmcforce.listeners;
 
+import mandomc.mmcforce.configs.ForceSideConfig;
 import mandomc.mmcforce.handlers.ISC;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -26,6 +27,8 @@ public class PlayerJoin implements Listener {
             side.setItem(5, ISC.createItem(Material.BLUE_GLAZED_TERRACOTTA, ChatColor.BLUE + "" + ChatColor.BOLD + "The Light Side"));
 
             player.openInventory(side);
+
+            ForceSideConfig.get().addDefault(player.getUniqueId().toString(), "none");
 
         }
 
