@@ -13,7 +13,7 @@ public class CooldownConfig {
     private static FileConfiguration customFile;
 
     public static void setup(){
-        file = new File(Bukkit.getServer().getPluginManager().getPlugin("MMCForce").getDataFolder(), "forceside.yml");
+        file = new File(Bukkit.getServer().getPluginManager().getPlugin("MMCForce").getDataFolder(), "cooldown.yml");
 
         if(!file.exists()){
             try {
