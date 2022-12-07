@@ -6,6 +6,6 @@ load: STARTUP
 authors: [ AstuteFlamez ]
 description: force powers whoo
 commands:
-  reload:
+  forcereload:
   force:
   forceside:

@@ -1,6 +1,7 @@
 package mandomc.mmcforce.listeners.forcepowers;
 
 import mandomc.mmcforce.MMCForce;
+import mandomc.mmcforce.configs.ForceSideConfig;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -22,20 +23,19 @@ public class Dash implements Listener {
         if (event.getAction().equals(Action.LEFT_CLICK_AIR)) {
             if (player.getInventory().getItemInMainHand().getType() == Material.FEATHER// light blue glass pane?
                     && player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GRAY + "Force Dash")) { //name?
-                if(!MMCForce.cooldown.containsKey(player.getUniqueId())){
+                if (!MMCForce.cooldown.containsKey(player.getUniqueId())) {
                     MMCForce.cooldown.put(player.getUniqueId(), System.currentTimeMillis());
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 3));
-                }else{
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 4));
+                } else {
                     long timeElapsed = System.currentTimeMillis() - MMCForce.cooldown.get(player.getUniqueId());
-                    if(timeElapsed>=3000){
+                    if (timeElapsed >= 3000) {
                         MMCForce.cooldown.remove(player.getUniqueId());
-                    }else{
-                        player.sendMessage(ChatColor.GOLD + "You can't use Force Dash for another " + ChatColor.RED + "" + ((3000 - timeElapsed)/1000) + "" + ChatColor.GOLD + " seconds!");
+                    } else {
+                        player.sendMessage(ChatColor.GOLD + "You can't use Force Dash for another " + ChatColor.RED + "" + ((3000 - timeElapsed) / 1000) + "" + ChatColor.GOLD + " seconds!");
 
                     }
                 }
             }
         }
     }
-
 }

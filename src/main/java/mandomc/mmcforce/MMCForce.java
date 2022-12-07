@@ -3,6 +3,7 @@ package mandomc.mmcforce;
 import mandomc.mmcforce.commands.Force;
 import mandomc.mmcforce.commands.ForceSide;
 import mandomc.mmcforce.commands.Reload;
+import mandomc.mmcforce.configs.CooldownConfig;
 import mandomc.mmcforce.configs.ForceSideConfig;
 import mandomc.mmcforce.listeners.InventoryClick;
 import mandomc.mmcforce.listeners.PlayerJoin;
@@ -26,6 +27,10 @@ public final class MMCForce extends JavaPlugin {
         ForceSideConfig.get().options().copyDefaults(true);
         ForceSideConfig.save();
 
+        CooldownConfig.setup();
+        CooldownConfig.get().options().copyDefaults(true);
+        CooldownConfig.save();
+
         getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
         getServer().getPluginManager().registerEvents(new InventoryClick(), this);
 
@@ -41,7 +46,7 @@ public final class MMCForce extends JavaPlugin {
 
 
         getCommand("force").setExecutor(new Force());
-        getCommand("reload").setExecutor(new Reload());
+        getCommand("forcereload").setExecutor(new Reload());
         getCommand("forceside").setExecutor(new ForceSide());
 
     }

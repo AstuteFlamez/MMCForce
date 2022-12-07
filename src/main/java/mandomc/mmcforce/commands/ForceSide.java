@@ -1,5 +1,6 @@
 package mandomc.mmcforce.commands;
 
+import mandomc.mmcforce.handlers.ConvertFromSecs;
 import mandomc.mmcforce.handlers.ISC;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -19,8 +20,8 @@ public class ForceSide implements CommandExecutor {
 
             Inventory side = Bukkit.createInventory(player, 9, ChatColor.DARK_GREEN + "" + ChatColor.BOLD + "Select Your Side!");
 
-            side.setItem(3, ISC.createItem(Material.RED_GLAZED_TERRACOTTA, ChatColor.DARK_RED + "" + ChatColor.BOLD + "The Dark Side"));
-            side.setItem(5, ISC.createItem(Material.BLUE_GLAZED_TERRACOTTA, ChatColor.BLUE + "" + ChatColor.BOLD + "The Light Side"));
+            side.setItem(3, ISC.createItem(Material.RED_GLAZED_TERRACOTTA, ChatColor.DARK_RED + "" + ChatColor.BOLD + "The Dark Side", "Cooldown: " + ConvertFromSecs.convertFromSecs(player)));
+            side.setItem(5, ISC.createItem(Material.BLUE_GLAZED_TERRACOTTA, ChatColor.BLUE + "" + ChatColor.BOLD + "The Light Side", "Cooldown: " + ConvertFromSecs.convertFromSecs(player)));
 
             player.openInventory(side);
         }

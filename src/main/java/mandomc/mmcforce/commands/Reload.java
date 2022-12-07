@@ -1,5 +1,6 @@
 package mandomc.mmcforce.commands;
 
+import mandomc.mmcforce.configs.CooldownConfig;
 import mandomc.mmcforce.configs.ForceSideConfig;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -15,6 +16,7 @@ public class Reload implements CommandExecutor {
 
         if(player.hasPermission("mmcforce.reload")){
             ForceSideConfig.reload();
+            CooldownConfig.reload();
         }else{
             player.sendMessage(ChatColor.RED + "The force is not with you.");
         }

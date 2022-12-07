@@ -22,7 +22,7 @@ public class Force implements CommandExecutor {
 
             Inventory lightSide = Bukkit.createInventory(player, 54, ChatColor.BLUE + "" + ChatColor.BOLD + "Light Side Force Powers");
 
-            lightSide.setItem(0, ISC.createItem(Material.FEATHER, ChatColor.GRAY + "Force Telekenisis", "", ChatColor.GRAY + "Pushes and pulles nearby entities back!", "", ChatColor.GOLD + "Ability: Force Push ->" + ChatColor.YELLOW + "" + ChatColor.BOLD + " LEFT CLICK", ChatColor.GOLD + "Ability: Force Pull ->" + ChatColor.YELLOW + "" + ChatColor.BOLD + " RIGHT CLICK", "", ChatColor.GRAY + "Cooldown: " + ChatColor.RED + "3 seconds"));
+            lightSide.setItem(0, ISC.createItem(Material.FEATHER, ChatColor.GRAY + "Force Telekinesis", "", ChatColor.GRAY + "Pushes and pulles nearby entities back!", "", ChatColor.GOLD + "Ability: Force Push ->" + ChatColor.YELLOW + "" + ChatColor.BOLD + " LEFT CLICK", ChatColor.GOLD + "Ability: Force Pull ->" + ChatColor.YELLOW + "" + ChatColor.BOLD + " RIGHT CLICK", "", ChatColor.GRAY + "Cooldown: " + ChatColor.RED + "3 seconds"));
             lightSide.setItem(1, ISC.createItem(Material.FEATHER, ChatColor.GRAY + "Force Dash", "", ChatColor.GRAY + "Gain Speed IV for 5 seconds!", "", ChatColor.GOLD + "Ability: Force Dash ->" + ChatColor.YELLOW + "" + ChatColor.BOLD + " LEFT CLICK", "", ChatColor.GRAY + "Cooldown: " + ChatColor.RED + "3 seconds"));
             lightSide.setItem(9, ISC.createItem(Material.FEATHER, ChatColor.BLUE + "Force Heal", "", ChatColor.GRAY + "Regain 2 hearts!", "", ChatColor.GOLD + "Ability: Force Heal ->" + ChatColor.YELLOW + "" + ChatColor.BOLD + " LEFT CLICK", "", ChatColor.GRAY + "Cooldown: " + ChatColor.RED + "3 seconds"));
             if(ForceSideConfig.get().getString(player.getUniqueId().toString()) != null){
@@ -35,7 +35,7 @@ public class Force implements CommandExecutor {
 
             Inventory darkSide = Bukkit.createInventory(player, 54, ChatColor.DARK_RED + "" + ChatColor.BOLD + "Dark Side Force Powers");
 
-            darkSide.setItem(0, ISC.createItem(Material.FEATHER, ChatColor.GRAY + "Force Telekenisis", "", ChatColor.GRAY + "Pushes and pulles nearby enemies back!", "", ChatColor.GOLD + "Ability: Force Push ->" + ChatColor.YELLOW + "" + ChatColor.BOLD + " LEFT CLICK", ChatColor.GOLD + "Ability: Force Pull ->" + ChatColor.YELLOW + "" + ChatColor.BOLD + " RIGHT CLICK", "", ChatColor.GRAY + "Cooldown: " + ChatColor.RED + "3 seconds"));
+            darkSide.setItem(0, ISC.createItem(Material.FEATHER, ChatColor.GRAY + "Force Telekinesis", "", ChatColor.GRAY + "Pushes and pulles nearby enemies back!", "", ChatColor.GOLD + "Ability: Force Push ->" + ChatColor.YELLOW + "" + ChatColor.BOLD + " LEFT CLICK", ChatColor.GOLD + "Ability: Force Pull ->" + ChatColor.YELLOW + "" + ChatColor.BOLD + " RIGHT CLICK", "", ChatColor.GRAY + "Cooldown: " + ChatColor.RED + "3 seconds"));
             darkSide.setItem(1, ISC.createItem(Material.FEATHER, ChatColor.GRAY + "Force Dash", "", ChatColor.GRAY + "Gain Speed IV for 5 seconds!", "", ChatColor.GOLD + "Ability: Force Dash ->" + ChatColor.YELLOW + "" + ChatColor.BOLD + " LEFT CLICK", "", ChatColor.GRAY + "Cooldown: " + ChatColor.RED + "3 seconds"));
             darkSide.setItem(9, ISC.createItem(Material.FEATHER, ChatColor.DARK_RED + "Force Lightning", "", ChatColor.GRAY + "Strike nearby enemies with lightning!", "", ChatColor.GOLD + "Ability: Force Lightning ->" + ChatColor.YELLOW + "" + ChatColor.BOLD + " LEFT CLICK", "", ChatColor.GRAY + "Cooldown: " + ChatColor.RED + "3 seconds"));
             darkSide.setItem(10, ISC.createItem(Material.FEATHER, ChatColor.DARK_RED + "Force Choke", "", ChatColor.GRAY + "Choke out nearby enemies!", "", ChatColor.GOLD + "Ability: Force Choke ->" + ChatColor.YELLOW + "" + ChatColor.BOLD + " LEFT CLICK", "", ChatColor.GRAY + "Cooldown: " + ChatColor.RED + "3 seconds"));
@@ -49,13 +49,6 @@ public class Force implements CommandExecutor {
                 }
             }else{
                 player.sendMessage(ChatColor.RED + "The force is not with you.");
-            }
-
-
-            if(ForceSideConfig.get().getString(player.getUniqueId().toString()).equalsIgnoreCase("none") || ForceSideConfig.get().getString(player.getUniqueId().toString()) == null){
-                    player.openInventory(lightSide);
-            }else{
-                player.sendMessage(prefix + ChatColor.GRAY + "You haven't selected a side of the force! Do this by running the command /forceside");
             }
 
         }

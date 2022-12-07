@@ -9,6 +9,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -21,24 +22,25 @@ public class Scream implements Listener {
         Player player = event.getPlayer();
 
         if(ForceSideConfig.get().getString(player.getUniqueId().toString()) != null){
-            if(ForceSideConfig.get().getString(player.getUniqueId().toString()).equalsIgnoreCase("dark")){
-                if(player.getInventory().getItemInMainHand().getType() == Material.FEATHER && player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.DARK_RED + "Force Scream")){
-                    if(!MMCForce.cooldown.containsKey(player.getUniqueId())){
-                        MMCForce.cooldown.put(player.getUniqueId(), System.currentTimeMillis());
-                        player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 2));
-                    }else{
-                        long timeElapsed = System.currentTimeMillis() - MMCForce.cooldown.get(player.getUniqueId());
-                        if(timeElapsed>=3000){
-                            MMCForce.cooldown.remove(player.getUniqueId());
+            if(ForceSideConfig.get().getString(player.getUniqueId().toString()).equalsIgnoreCase("dark")) {
+                if (event.getAction().equals(Action.LEFT_CLICK_AIR)) {
+                    if (player.getInventory().getItemInMainHand().getType() == Material.FEATHER && player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.DARK_RED + "Force Scream")) {
+                        if (!MMCForce.cooldown.containsKey(player.getUniqueId())) {
+                            MMCForce.cooldown.put(player.getUniqueId(), System.currentTimeMillis());
+                            player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 2));
                         }else{
-                            player.sendMessage(ChatColor.GOLD + "You can't use Force Scream for another " + ChatColor.RED + "" + ((3000 - timeElapsed)/1000) + "" + ChatColor.GOLD + " seconds!");
-
+                            long timeElapsed = System.currentTimeMillis() - MMCForce.cooldown.get(player.getUniqueId());
+                            if (timeElapsed >= 3000) {
+                                MMCForce.cooldown.remove(player.getUniqueId());
+                            } else {
+                                player.sendMessage(ChatColor.GOLD + "You can't use Force Scream for another " + ChatColor.RED + "" + ((3000 - timeElapsed) / 1000) + "" + ChatColor.GOLD + " seconds!");
+                            }
                         }
                     }
                 }
+            }else{
+                player.sendMessage(ChatColor.RED + "The force is not with you.");
             }
-        }else{
-            player.sendMessage(ChatColor.RED + "The force is not with you.");
         }
     }
 
