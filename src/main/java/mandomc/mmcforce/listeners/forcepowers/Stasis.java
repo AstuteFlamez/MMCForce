@@ -25,12 +25,13 @@ public class Stasis implements Listener {
 
         if (event.getAction().equals(Action.LEFT_CLICK_AIR)) {
             if (player.getInventory().getItemInMainHand().getType() == Material.FEATHER && player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GRAY + "Force Stasis")) {
-                for (Entity entity : player.getNearbyEntities(5, 5, 5)) {
                     if (!MMCForce.cooldown.containsKey(player.getUniqueId())) {
                         MMCForce.cooldown.put(player.getUniqueId(), System.currentTimeMillis());
-                        if (entity instanceof LivingEntity) {
-                            LivingEntity livingEntity = (LivingEntity) entity;
-                            livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 2));
+                        for (Entity entity : player.getNearbyEntities(5, 5, 5)) {
+                            if (entity instanceof LivingEntity) {
+                                LivingEntity livingEntity = (LivingEntity) entity;
+                                livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 2));
+                            }
                         }
                         player.sendMessage(prefix + ChatColor.GRAY + "You used Force Stasis!");
                     } else {
