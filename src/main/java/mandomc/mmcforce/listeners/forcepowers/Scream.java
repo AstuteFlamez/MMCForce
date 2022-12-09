@@ -21,6 +21,8 @@ public class Scream implements Listener {
 
         Player player = event.getPlayer();
 
+        String prefix = ChatColor.GREEN + "" + ChatColor.BOLD + "MMCForce " + ChatColor.DARK_GRAY + "» ";
+
         if(ForceSideConfig.get().getString(player.getUniqueId().toString()) != null){
             if(ForceSideConfig.get().getString(player.getUniqueId().toString()).equalsIgnoreCase("dark")) {
                 if (event.getAction().equals(Action.LEFT_CLICK_AIR)) {
@@ -28,6 +30,7 @@ public class Scream implements Listener {
                         if (!MMCForce.cooldown.containsKey(player.getUniqueId())) {
                             MMCForce.cooldown.put(player.getUniqueId(), System.currentTimeMillis());
                             player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 2));
+                            player.sendMessage(prefix + ChatColor.GRAY + "You used Force Scream!");
                         }else{
                             long timeElapsed = System.currentTimeMillis() - MMCForce.cooldown.get(player.getUniqueId());
                             if (timeElapsed >= 3000) {
@@ -38,8 +41,12 @@ public class Scream implements Listener {
                         }
                     }
                 }
-            }else{
-                player.sendMessage(ChatColor.RED + "The force is not with you.");
+            }else if(ForceSideConfig.get().getString(player.getUniqueId().toString()).equalsIgnoreCase("light")) {
+                if (event.getAction().equals(Action.LEFT_CLICK_AIR)) {
+                    if (player.getInventory().getItemInMainHand().getType() == Material.FEATHER && player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.DARK_RED + "Force Scream")) {
+                        player.sendMessage(ChatColor.RED + "The force is not with you.");
+                    }
+                }
             }
         }
     }

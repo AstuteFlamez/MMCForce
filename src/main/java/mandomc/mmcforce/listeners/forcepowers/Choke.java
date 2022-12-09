@@ -21,35 +21,39 @@ public class Choke implements Listener {
 
         Player player = event.getPlayer();
 
+        String prefix = ChatColor.GREEN + "" + ChatColor.BOLD + "MMCForce " + ChatColor.DARK_GRAY + "» ";
+
         if(ForceSideConfig.get().getString(player.getUniqueId().toString()) != null){
             if(ForceSideConfig.get().getString(player.getUniqueId().toString()).equalsIgnoreCase("dark")) {
                 if (event.getAction().equals(Action.LEFT_CLICK_AIR)) {
                     if (player.getInventory().getItemInMainHand().getType() == Material.FEATHER && player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.DARK_RED + "Force Choke")) {
-                        for (Entity entity : player.getNearbyEntities(5, 5, 5)) {
-                            if (!MMCForce.cooldown.containsKey(player.getUniqueId())) {
-                                MMCForce.cooldown.put(player.getUniqueId(), System.currentTimeMillis());
+                        if (!MMCForce.cooldown.containsKey(player.getUniqueId())) {
+                            MMCForce.cooldown.put(player.getUniqueId(), System.currentTimeMillis());
+                            for (Entity entity : player.getNearbyEntities(5, 5, 5)) {
                                 if (entity instanceof LivingEntity) {
                                     LivingEntity livingEntity = (LivingEntity) entity;
-                                    livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 60, 0));
-                                    livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 60, 0));
-                                    player.sendMessage(ChatColor.DARK_RED + "You slowly choke your surrounding foes.");
-                                } else {
-                                    player.sendMessage(ChatColor.GOLD + "There were no near entities in range.");
+                                    livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 120, 0));
+                                    livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 120, 0));
                                 }
+                            }
+                            player.sendMessage(prefix + ChatColor.GRAY + "You used Force Choke!");
+                        }else {
+                            long timeElapsed = System.currentTimeMillis() - MMCForce.cooldown.get(player.getUniqueId());
+                            if (timeElapsed >= 3000) {
+                                MMCForce.cooldown.remove(player.getUniqueId());
                             } else {
-                                long timeElapsed = System.currentTimeMillis() - MMCForce.cooldown.get(player.getUniqueId());
-                                if (timeElapsed >= 3000) {
-                                    MMCForce.cooldown.remove(player.getUniqueId());
-                                } else {
-                                    player.sendMessage(ChatColor.GOLD + "You can't use Force Choke for another " + ChatColor.RED + "" + ((3000 - timeElapsed) / 1000) + "" + ChatColor.GOLD + " seconds!");
+                                player.sendMessage(ChatColor.GOLD + "You can't use Force Choke for another " + ChatColor.RED + "" + ((3000 - timeElapsed) / 1000) + "" + ChatColor.GOLD + " seconds!");
 
-                                }
                             }
                         }
                     }
                 }
-            }else{
-                player.sendMessage(ChatColor.RED + "The force is not with you.");
+            }else if(ForceSideConfig.get().getString(player.getUniqueId().toString()).equalsIgnoreCase("light")) {
+                if (event.getAction().equals(Action.LEFT_CLICK_AIR)) {
+                    if (player.getInventory().getItemInMainHand().getType() == Material.FEATHER && player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.DARK_RED + "Force Choke")) {
+                        player.sendMessage(ChatColor.RED + "The force is not with you.");
+                    }
+                }
             }
         }
     }

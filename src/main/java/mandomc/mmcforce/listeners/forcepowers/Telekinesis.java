@@ -20,31 +20,32 @@ public class Telekinesis implements Listener {
 
         Player player = event.getPlayer();
 
+        String prefix = ChatColor.GREEN + "" + ChatColor.BOLD + "MMCForce " + ChatColor.DARK_GRAY + "» ";
+
         if (event.getAction().equals(Action.LEFT_CLICK_AIR)) {
             if (player.getInventory().getItemInMainHand().getType() == Material.FEATHER// light blue glass pane?
                     && player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GRAY + "Force Telekinesis")) { //name?
-                for(Entity entity : player.getNearbyEntities(8, 8, 8)){
-                    if(!MMCForce.cooldown.containsKey(player.getUniqueId())){
-                        MMCForce.cooldown.put(player.getUniqueId(), System.currentTimeMillis());
-                        if(entity instanceof LivingEntity){
+                if (!MMCForce.cooldown.containsKey(player.getUniqueId())) {
+                    MMCForce.cooldown.put(player.getUniqueId(), System.currentTimeMillis());
+                    for (Entity entity : player.getNearbyEntities(8, 8, 8)) {
+                        if (entity instanceof LivingEntity) {
                             LivingEntity livingEntity = (LivingEntity) entity;
                             double livingEntityHealth = livingEntity.getHealth();
-                            livingEntity.setHealth(livingEntityHealth-2.0);
+                            livingEntity.setHealth(livingEntityHealth - 2.0);
                             Vector vector = genVec(player.getLocation(), livingEntity.getLocation());
                             vector.setY(1);
                             livingEntity.setVelocity(vector);
-                            player.sendMessage(ChatColor.GOLD + "You used the force to " + ChatColor.UNDERLINE + "push" + ChatColor.RESET + "" + ChatColor.GOLD + " any nearby entities!");
-                        }else{
-                            player.sendMessage(ChatColor.GOLD + "There were no near entities in range.");
                         }
+                    }
+                    player.sendMessage(prefix + ChatColor.GRAY + "You used Force Push!");
+                }
+                else{
+                    long timeElapsed = System.currentTimeMillis() - MMCForce.cooldown.get(player.getUniqueId());
+                    if(timeElapsed>=3000){
+                        MMCForce.cooldown.remove(player.getUniqueId());
                     }else{
-                        long timeElapsed = System.currentTimeMillis() - MMCForce.cooldown.get(player.getUniqueId());
-                        if(timeElapsed>=3000){
-                            MMCForce.cooldown.remove(player.getUniqueId());
-                        }else{
-                            player.sendMessage(ChatColor.GOLD + "You can't use Force Push for another " + ChatColor.RED + "" + ((3000 - timeElapsed)/1000) + "" + ChatColor.GOLD + " seconds!");
+                        player.sendMessage(ChatColor.GOLD + "You can't use Force Push for another " + ChatColor.RED + "" + ((3000 - timeElapsed)/1000) + "" + ChatColor.GOLD + " seconds!");
 
-                        }
                     }
                 }
             }
@@ -52,27 +53,25 @@ public class Telekinesis implements Listener {
         if (event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
             if (player.getInventory().getItemInMainHand().getType() == Material.FEATHER// light blue glass pane?
                     && player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GRAY + "Force Telekinesis")) { //name?
-                for(Entity entity : player.getNearbyEntities(15, 15, 15)){
-                    if(!MMCForce.cooldown.containsKey(player.getUniqueId())){
-                        MMCForce.cooldown.put(player.getUniqueId(), System.currentTimeMillis());
-                        if(entity instanceof LivingEntity){
+                if (!MMCForce.cooldown.containsKey(player.getUniqueId())) {
+                    MMCForce.cooldown.put(player.getUniqueId(), System.currentTimeMillis());
+                    for (Entity entity : player.getNearbyEntities(15, 15, 15)) {
+                        if (entity instanceof LivingEntity) {
                             LivingEntity livingEntity = (LivingEntity) entity;
                             double livingEntityHealth = livingEntity.getHealth();
-                            livingEntity.setHealth(livingEntityHealth-2.0);
+                            livingEntity.setHealth(livingEntityHealth - 2.0);
                             Vector vector = genVec(livingEntity.getLocation(), player.getLocation());
                             livingEntity.setVelocity(vector);
-                            player.sendMessage(ChatColor.GOLD + "You used the force to " + ChatColor.UNDERLINE + "pull" + ChatColor.RESET + "" + ChatColor.GOLD + " any nearby entities!");
-                        }else{
-                            player.sendMessage(ChatColor.GOLD + "There were no near entities in range.");
                         }
-                    }else{
-                        long timeElapsed = System.currentTimeMillis() - MMCForce.cooldown.get(player.getUniqueId());
-                        if(timeElapsed>=3000){
-                            MMCForce.cooldown.remove(player.getUniqueId());
-                        }else{
-                            player.sendMessage(ChatColor.GOLD + "You can't use Force Pull for another " + ChatColor.RED + "" + ((3000 - timeElapsed)/1000) + "" + ChatColor.GOLD + " seconds!");
+                    }
+                    player.sendMessage(prefix + ChatColor.GRAY + "You used Force Pull!");
+                }else{
+                    long timeElapsed = System.currentTimeMillis() - MMCForce.cooldown.get(player.getUniqueId());
+                    if (timeElapsed >= 3000) {
+                        MMCForce.cooldown.remove(player.getUniqueId());
+                    } else {
+                        player.sendMessage(ChatColor.GOLD + "You can't use Force Pull for another " + ChatColor.RED + "" + ((3000 - timeElapsed) / 1000) + "" + ChatColor.GOLD + " seconds!");
 
-                        }
                     }
                 }
             }

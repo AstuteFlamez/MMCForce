@@ -11,11 +11,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
-public class Crush implements Listener {
+public class Blind implements Listener {
 
     @EventHandler
-    public void onCrush(PlayerInteractEvent event){
+    public void onBlind(PlayerInteractEvent event){
 
         Player player = event.getPlayer();
 
@@ -24,22 +26,22 @@ public class Crush implements Listener {
         if(ForceSideConfig.get().getString(player.getUniqueId().toString()) != null){
             if(ForceSideConfig.get().getString(player.getUniqueId().toString()).equalsIgnoreCase("dark")) {
                 if (event.getAction().equals(Action.LEFT_CLICK_AIR)) {
-                    if (player.getInventory().getItemInMainHand().getType() == Material.FEATHER && player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.DARK_RED + "Force Crush")) {
+                    if (player.getInventory().getItemInMainHand().getType() == Material.FEATHER && player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.DARK_RED + "Force Blind")) {
                         if (!MMCForce.cooldown.containsKey(player.getUniqueId())) {
                             MMCForce.cooldown.put(player.getUniqueId(), System.currentTimeMillis());
                             for (Entity entity : player.getNearbyEntities(5, 5, 5)) {
                                 if (entity instanceof LivingEntity) {
                                     LivingEntity livingEntity = (LivingEntity) entity;
-                                    livingEntity.damage(4.0, player);
+                                    livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS, 200, 0));
                                 }
                             }
-                            player.sendMessage(prefix + ChatColor.GRAY + "You used Force Crush!");
-                        }else{
+                            player.sendMessage(prefix + ChatColor.GRAY + "You used Force Blind!");
+                        }else {
                             long timeElapsed = System.currentTimeMillis() - MMCForce.cooldown.get(player.getUniqueId());
                             if (timeElapsed >= 3000) {
                                 MMCForce.cooldown.remove(player.getUniqueId());
                             } else {
-                                player.sendMessage(ChatColor.GOLD + "You can't use Force Crush for another " + ChatColor.RED + "" + ((3000 - timeElapsed) / 1000) + "" + ChatColor.GOLD + " seconds!");
+                                player.sendMessage(ChatColor.GOLD + "You can't use Force Blind for another " + ChatColor.RED + "" + ((3000 - timeElapsed) / 1000) + "" + ChatColor.GOLD + " seconds!");
 
                             }
                         }
@@ -47,7 +49,7 @@ public class Crush implements Listener {
                 }
             }else if(ForceSideConfig.get().getString(player.getUniqueId().toString()).equalsIgnoreCase("light")) {
                 if (event.getAction().equals(Action.LEFT_CLICK_AIR)) {
-                    if (player.getInventory().getItemInMainHand().getType() == Material.FEATHER && player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.DARK_RED + "Force Crush")) {
+                    if (player.getInventory().getItemInMainHand().getType() == Material.FEATHER && player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.DARK_RED + "Force Blind")) {
                         player.sendMessage(ChatColor.RED + "The force is not with you.");
                     }
                 }

@@ -19,41 +19,46 @@ public class Drain implements Listener {
     @EventHandler
     public void onDrain(PlayerInteractEvent event){
 
+        String prefix = ChatColor.GREEN + "" + ChatColor.BOLD + "MMCForce " + ChatColor.DARK_GRAY + "» ";
+
         Player player = event.getPlayer();
 
         if(ForceSideConfig.get().getString(player.getUniqueId().toString()) != null){
             if(ForceSideConfig.get().getString(player.getUniqueId().toString()).equalsIgnoreCase("dark")){
                 if(event.getAction().equals(Action.LEFT_CLICK_AIR)) {
                     if (player.getInventory().getItemInMainHand().getType() == Material.FEATHER && player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.DARK_RED + "Force Drain")) {
-                        for (Entity entity : player.getNearbyEntities(5, 5, 5)) {
-                            if (!MMCForce.cooldown.containsKey(player.getUniqueId())) {
-                                MMCForce.cooldown.put(player.getUniqueId(), System.currentTimeMillis());
+                        if (!MMCForce.cooldown.containsKey(player.getUniqueId())) {
+                            MMCForce.cooldown.put(player.getUniqueId(), System.currentTimeMillis());
+                            for (Entity entity : player.getNearbyEntities(5, 5, 5)) {
                                 if (entity instanceof LivingEntity) {
                                     LivingEntity livingEntity = (LivingEntity) entity;
-                                    double lEHealth = livingEntity.getHealth();
-                                    livingEntity.setHealth(lEHealth - 2.0);
-                                    //livingEntity.addPotionEffects(new PotionEffect(PotionEffectType.HARM))
-                                    double pHealth = player.getHealth();
-                                    player.setHealth(pHealth + 2.0);
-
-                                    player.sendMessage(ChatColor.DARK_RED + "The more enemies nearby, the better.");
-                                } else {
-                                    player.sendMessage(ChatColor.GOLD + "There were no near entities in range.");
+                                    livingEntity.damage(2.0, player);
+                                    double health = player.getHealth();
+                                    if (player.getHealth() < 18.0) {
+                                        player.setHealth(health + 2.0);
+                                    } else if (player.getHealth() >= 18.00 && player.getHealth() <= 20.00) {
+                                        player.setHealth(20.00);
+                                    }
                                 }
+                            }
+                            player.sendMessage(prefix + ChatColor.GRAY + "You used Force Drain!");
+                        }else {
+                            long timeElapsed = System.currentTimeMillis() - MMCForce.cooldown.get(player.getUniqueId());
+                            if (timeElapsed >= 3000) {
+                                MMCForce.cooldown.remove(player.getUniqueId());
                             } else {
-                                long timeElapsed = System.currentTimeMillis() - MMCForce.cooldown.get(player.getUniqueId());
-                                if (timeElapsed >= 3000) {
-                                    MMCForce.cooldown.remove(player.getUniqueId());
-                                } else {
-                                    player.sendMessage(ChatColor.GOLD + "You can't use Force Drain for another " + ChatColor.RED + "" + ((3000 - timeElapsed) / 1000) + "" + ChatColor.GOLD + " seconds!");
+                                player.sendMessage(ChatColor.GOLD + "You can't use Force Drain for another " + ChatColor.RED + "" + ((3000 - timeElapsed) / 1000) + "" + ChatColor.GOLD + " seconds!");
 
-                                }
                             }
                         }
                     }
                 }
-            }else{
-                player.sendMessage(ChatColor.RED + "The force is not with you.");
+            }else if(ForceSideConfig.get().getString(player.getUniqueId().toString()).equalsIgnoreCase("light")) {
+                if (event.getAction().equals(Action.LEFT_CLICK_AIR)) {
+                    if (player.getInventory().getItemInMainHand().getType() == Material.FEATHER && player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.DARK_RED + "Force Drain")) {
+                        player.sendMessage(ChatColor.RED + "The force is not with you.");
+                    }
+                }
             }
         }
     }

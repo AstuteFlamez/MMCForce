@@ -1,7 +1,5 @@
 package mandomc.mmcforce.listeners;
 
-import mandomc.mmcforce.commands.ForceSide;
-import mandomc.mmcforce.configs.CooldownConfig;
 import mandomc.mmcforce.configs.ForceSideConfig;
 import mandomc.mmcforce.handlers.ISC;
 import org.bukkit.Bukkit;
@@ -12,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.scoreboard.*;
 
 public class PlayerJoin implements Listener {
 
@@ -31,10 +30,7 @@ public class PlayerJoin implements Listener {
             player.openInventory(side);
 
             ForceSideConfig.get().addDefault(player.getUniqueId().toString(), "none");
-            CooldownConfig.get().addDefault(player.getUniqueId().toString(), 0);
 
         }
-
     }
-
 }
